@@ -89,7 +89,7 @@ public class Decider {
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
-        allCards.stream().sorted(Comparator.comparing(i -> i.cardtype.ordinal()));
+        allCards.stream().sorted(Comparator.comparing(i -> i.cardtype.ordinal())).toList();
 
 
     }
