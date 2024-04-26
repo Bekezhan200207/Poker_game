@@ -30,7 +30,7 @@ public class Decider {
 
     }
 
-    public void Pair(List<Card> listDealer, List<Card> listplayer){
+    public  Pair(List<Card> listDealer, List<Card> listplayer){
         Map<Card, Card> pair = null;
         Combos val;
         for (Card card : listplayer) {
@@ -38,6 +38,7 @@ public class Decider {
                 if (card.cardvalue.equals(card1.cardvalue)){
                      pair.put(card, card1);
                      val = Combos.Pair;
+                     return val;
                      break;
                 }
             }
@@ -87,10 +88,24 @@ public class Decider {
         Combos val;
         Map<CardType, Card> Flash = null;
         List<Card> allCards = new ArrayList<>();
+        Map<CardType, Integer> Flashcombo = new HashMap<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
-        allCards.stream().sorted(Comparator.comparing(i -> i.cardtype.ordinal())).toList();
+        for (Card allCard : allCards) {
+            Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
+        }
+        if (Flashcombo.values().stream().anyMatch(x -> x == 4)){
+            val = Combos.Flash;
+        }
 
+
+    }
+
+    public void Street(List<Card> listDealer, List<Card> listplayer){
+        Combos val;
+        List<Card> allCards = new ArrayList<>();
+        allCards.addAll(listDealer);
+        allCards.addAll(listplayer);
 
     }
 }
