@@ -31,19 +31,24 @@ public class Decider {
     }
 
     public Combos Pair(List<Card> listDealer, List<Card> listplayer){
-        Map<Card, Card> pair = null;
-        Combos val;
-        for (Card card : listplayer) {
-            for (Card card1 : listDealer) {
-                if (card.cardvalue.equals(card1.cardvalue)){
-                     pair.put(card, card1);
-                     val = Combos.Pair;
-                     return val;
-                     break;
-                }
+        Combos val = null;
+        List<Integer> pair = new ArrayList<>();
+        Set<Integer> nums = new HashSet<>();
+        List<Card> allCards = new ArrayList<>();
+        allCards.addAll(listDealer);
+        allCards.addAll(listplayer);
+        for (Card allCard : allCards) {
+            nums.add(allCard.cardvalue);
+            pair.add(allCard.cardvalue);
+        }
+        for (Integer num : nums) {
+            if(pair.stream().filter(x -> pair.count(x) == 2)){ // я хочу посчитать количество значений "Х" в "PAIR" но не выходит
+                val = Combos.Pair;
+                break;
             }
         }
-        
+        return val;
+
     }
     public void twoPairs(List<Card> listDealer, List<Card> listplayer){
         Map<Card, Card> pair1 = null;
@@ -84,9 +89,8 @@ public class Decider {
         }
     }
 
-    public void Flash(List<Card> listDealer, List<Card> listplayer){
+    public Combos Flash(List<Card> listDealer, List<Card> listplayer){
         Combos val;
-        Map<CardType, Card> Flash = null;
         List<Card> allCards = new ArrayList<>();
         Map<CardType, Integer> Flashcombo = new HashMap<>();
         allCards.addAll(listDealer);
@@ -96,16 +100,15 @@ public class Decider {
         }
         Optional<Map.Entry<CardType, Integer>> any = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 4).findFirst();
         if (any.isPresent()){
+            Map.Entry<CardType, Integer> entry = any.get();
             for (Card card : listplayer) {
-                if(card..equals(any.))
+                if(card.cardtype.equals(entry.getKey())){
+                    val = Combos.Flash;
+
+                }
             }
         }
-
-
-
-
-
-
+        return val;
     }
 
     public void Street(List<Card> listDealer, List<Card> listplayer){
