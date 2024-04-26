@@ -30,7 +30,7 @@ public class Decider {
 
     }
 
-    public  Pair(List<Card> listDealer, List<Card> listplayer){
+    public Combos Pair(List<Card> listDealer, List<Card> listplayer){
         Map<Card, Card> pair = null;
         Combos val;
         for (Card card : listplayer) {
@@ -94,9 +94,16 @@ public class Decider {
         for (Card allCard : allCards) {
             Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
         }
-        if (Flashcombo.values().stream().anyMatch(x -> x == 4)){
-            val = Combos.Flash;
+        Optional<Map.Entry<CardType, Integer>> any = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 4).findFirst();
+        if (any.isPresent()){
+            for (Card card : listplayer) {
+                if(card..equals(any.))
+            }
         }
+
+
+
+
 
 
     }
