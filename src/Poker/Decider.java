@@ -41,19 +41,19 @@ public class Decider {
             nums.add(allCard.cardvalue);
             pair.add(allCard.cardvalue);
         }
-        for (Integer num : nums) {
+        /*for (Integer num : nums) {
             if(pair.stream().filter(x -> pair.count(x) == 2)){ // я хочу посчитать количество значений "Х" в "PAIR" но не выходит
                 val = Combos.Pair;
                 break;
             }
         }
-        return val;
+        */return val;
 
     }
-    public void twoPairs(List<Card> listDealer, List<Card> listplayer){
+    public Combos twoPairs(List<Card> listDealer, List<Card> listplayer){
         Map<Card, Card> pair1 = null;
         Map<Card, Card> pair2 = null;
-        Combos val;
+
         for (Card card : listplayer) {
             for (Card card1 : listDealer) {
                 if (card.cardvalue.equals(card1.cardvalue)){
@@ -63,16 +63,16 @@ public class Decider {
                     else{
                         pair1.put(card, card1);
                     }
-                    val = Combos.TwoPairs;
+                    return Combos.TwoPairs;
                     break;
                 }
             }
         }
     }
 
-    public void three(List<Card> listDealer, List<Card> listplayer){
+    public Combos three(List<Card> listDealer, List<Card> listplayer){
         Set<Card> three = null;
-        Combos val;
+
         for (Card card : listplayer) {
             three.add(card);
             for (Card card1 : listDealer) {
@@ -84,13 +84,13 @@ public class Decider {
                 three.clear();
             }
             else{
-                val = Combos.Three;
+                return Combos.Three;
             }
         }
     }
 
     public Combos Flash(List<Card> listDealer, List<Card> listplayer){
-        Combos val;
+        Combos val = null;
         List<Card> allCards = new ArrayList<>();
         Map<CardType, Integer> Flashcombo = new HashMap<>();
         allCards.addAll(listDealer);
@@ -111,11 +111,44 @@ public class Decider {
         return val;
     }
 
-    public void Street(List<Card> listDealer, List<Card> listplayer){
+    public Combos Street(List<Card> listDealer, List<Card> listplayer){
         Combos val;
         List<Card> allCards = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
+        for (Card allCard : allCards) {
+            nums.add(allCard.cardvalue);
+        }
+        nums.sort(Comparator.naturalOrder());
+        Integer number = nums.get(0);
+        Integer counter = 0;
+        for (int i = 1; i < 7; i++) {
+            if(nums.get(i) == number + 1){
+                number = nums.get(i);
+                counter++;
+            }
+            else{
+                counter = 0;
+                number = nums.get(i);
+            }
+        }
+        boolean playercard = false;
+        for (Card card : listplayer) {
+            if(nums.contains(card.cardvalue)){
+                playercard = true;
+                break;
+            }
+        }
+        if (counter >= 5 && playercard){
+            return Combos.Street;
+        }
 
+
+
+    }
+    public Combos FullHouse(List<Card> listDealer, List<Card> listplayer){
+        Combos threes = three(listDealer,listplayer);;
+        return null;
     }
 }
