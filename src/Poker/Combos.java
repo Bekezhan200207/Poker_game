@@ -6,11 +6,11 @@ import java.util.Optional;
 
 public enum Combos {
     StreetFlash,
-    Kare,
+    Quads,
     FullHouse,
     Flash,
     Street,
-    Three,
+    Threes,
     TwoPairs,
     Pair,
     HighCard;

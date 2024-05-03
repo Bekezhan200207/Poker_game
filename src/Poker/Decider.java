@@ -4,53 +4,39 @@ import java.util.*;
 
 public class Decider {
     public final List<CardType> combo;
-    public String winner;
-
     Decider(List<CardType> combo, String winner) {
         this.combo = combo;
-        this.winner = winner;
     }
 
-    public String getWinner() {
-        return winner;
-    }
-
-    public void HighCard(List<Card> pl1_cards, List<Card> pl2_cards){
+    public static boolean HighCard(List<Card> pl1_cards, List<Card> pl2_cards){
         Integer val1 = pl1_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
         Integer val2 = pl2_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
-        if(val1 == val2){
-            winner = "Tie";
-        }
-        else if (val1 > val2) {
-            winner = "player1";
-        }
-        else{
-            winner = "player2";
-        }
-
+        return true;
     }
 
-    public Combos Pair(List<Card> listDealer, List<Card> listplayer){
+    public static boolean Pair(List<Card> listDealer, List<Card> listplayer){
         Combos val = null;
-        List<Integer> pair = new ArrayList<>();
-        Set<Integer> nums = new HashSet<>();
+        Map<Integer,Integer> pair = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
-        for (Card allCard : allCards) {
-            nums.add(allCard.cardvalue);
-            pair.add(allCard.cardvalue);
+        for (Card card : allCards) {
+            pair.merge(card.cardvalue, 1, Integer::sum);
         }
-        /*for (Integer num : nums) {
-            if(pair.stream().filter(x -> pair.count(x) == 2)){ // я хочу посчитать количество значений "Х" в "PAIR" но не выходит
-                val = Combos.Pair;
-                break;
+        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        if (first.isPresent()) {
+            Map.Entry<Integer,Integer> entry = first.get();
+            for (Card card : listplayer) {
+                if(card.cardtype.equals(entry.getKey())){
+                    return true;
+                }
             }
         }
-        */return val;
 
+
+        return false;
     }
-    public Combos twoPairs(List<Card> listDealer, List<Card> listplayer){
+    public static boolean twoPairs(List<Card> listDealer, List<Card> listplayer){
         Map<Card, Card> pair1 = null;
         Map<Card, Card> pair2 = null;
 
@@ -63,14 +49,14 @@ public class Decider {
                     else{
                         pair1.put(card, card1);
                     }
-                    return Combos.TwoPairs;
-                    break;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public Combos three(List<Card> listDealer, List<Card> listplayer){
+    public static boolean threes(List<Card> listDealer, List<Card> listplayer){
         Set<Card> three = null;
 
         for (Card card : listplayer) {
@@ -84,12 +70,13 @@ public class Decider {
                 three.clear();
             }
             else{
-                return Combos.Three;
+                return true;
             }
         }
+        return false;
     }
 
-    public Combos Flash(List<Card> listDealer, List<Card> listplayer){
+    public static boolean Flash(List<Card> listDealer, List<Card> listplayer){
         Combos val = null;
         List<Card> allCards = new ArrayList<>();
         Map<CardType, Integer> Flashcombo = new HashMap<>();
@@ -103,15 +90,15 @@ public class Decider {
             Map.Entry<CardType, Integer> entry = any.get();
             for (Card card : listplayer) {
                 if(card.cardtype.equals(entry.getKey())){
-                    val = Combos.Flash;
+                    return true;
 
                 }
             }
         }
-        return val;
+        return false;
     }
 
-    public Combos Street(List<Card> listDealer, List<Card> listplayer){
+    public static boolean Street(List<Card> listDealer, List<Card> listplayer){
         Combos val;
         List<Card> allCards = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();
@@ -141,14 +128,46 @@ public class Decider {
             }
         }
         if (counter >= 5 && playercard){
-            return Combos.Street;
+            return true;
         }
 
 
-
+        return false;
     }
-    public Combos FullHouse(List<Card> listDealer, List<Card> listplayer){
-        Combos threes = three(listDealer,listplayer);;
-        return null;
+    public static boolean FullHouse(List<Card> listDealer, List<Card> listplayer){
+        Boolean threes = threes(listDealer,listplayer);;
+        Boolean pair = Pair(listDealer,listplayer);;
+        if(pair && threes){
+            return true;
+        }
+        return false;
+    }
+    public static boolean quads(List<Card> listDealer, List<Card> listplayer){
+        Map<Integer,Integer> pair = new HashMap<>();
+        List<Card> allCards = new ArrayList<>();
+        allCards.addAll(listDealer);
+        allCards.addAll(listplayer);
+        for (Card card : allCards) {
+            pair.merge(card.cardvalue, 1, Integer::sum);
+        }
+        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 4).findFirst();
+        if (first.isPresent()) {
+            Map.Entry<Integer,Integer> entry = first.get();
+            for (Card card : listplayer) {
+                if(card.cardtype.equals(entry.getKey())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean streetFLash(List<Card> listDealer, List<Card> listplayer){
+        Boolean Flash = Flash(listDealer,listplayer);;
+        Boolean Street = Street(listDealer,listplayer);;
+        if(Flash && Street){
+            return true;
+        }
+        return false;
     }
 }

@@ -31,8 +31,6 @@ public class PokerRunner {
         System.out.println(player1);
         System.out.println(player2);
 
-
-
     }
 
 }
