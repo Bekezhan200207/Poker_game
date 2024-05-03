@@ -4,17 +4,12 @@ import java.util.*;
 
 public class Decider {
     public final List<CardType> combo;
-    Decider(List<CardType> combo, String winner) {
+    Decider(List<CardType> combo) {
         this.combo = combo;
     }
 
-    public static boolean HighCard(List<Card> pl1_cards, List<Card> pl2_cards){
-        Integer val1 = pl1_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
-        Integer val2 = pl2_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
-        return true;
-    }
 
-    public static boolean Pair(List<Card> listDealer, List<Card> listplayer){
+    public static boolean pair(List<Card> listDealer, List<Card> listplayer){
         Combos val = null;
         Map<Integer,Integer> pair = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
@@ -57,7 +52,7 @@ public class Decider {
     }
 
     public static boolean threes(List<Card> listDealer, List<Card> listplayer){
-        Set<Card> three = null;
+        Set<Card> three = new HashSet<>();
 
         for (Card card : listplayer) {
             three.add(card);
@@ -76,7 +71,7 @@ public class Decider {
         return false;
     }
 
-    public static boolean Flash(List<Card> listDealer, List<Card> listplayer){
+    public static boolean flash(List<Card> listDealer, List<Card> listplayer){
         Combos val = null;
         List<Card> allCards = new ArrayList<>();
         Map<CardType, Integer> Flashcombo = new HashMap<>();
@@ -98,7 +93,7 @@ public class Decider {
         return false;
     }
 
-    public static boolean Street(List<Card> listDealer, List<Card> listplayer){
+    public static boolean street(List<Card> listDealer, List<Card> listplayer){
         Combos val;
         List<Card> allCards = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();
@@ -134,9 +129,9 @@ public class Decider {
 
         return false;
     }
-    public static boolean FullHouse(List<Card> listDealer, List<Card> listplayer){
+    public static boolean fullHouse(List<Card> listDealer, List<Card> listplayer){
         Boolean threes = threes(listDealer,listplayer);;
-        Boolean pair = Pair(listDealer,listplayer);;
+        Boolean pair = pair(listDealer,listplayer);;
         if(pair && threes){
             return true;
         }
@@ -163,8 +158,8 @@ public class Decider {
     }
 
     public static boolean streetFLash(List<Card> listDealer, List<Card> listplayer){
-        Boolean Flash = Flash(listDealer,listplayer);;
-        Boolean Street = Street(listDealer,listplayer);;
+        Boolean Flash = flash(listDealer,listplayer);;
+        Boolean Street = street(listDealer,listplayer);;
         if(Flash && Street){
             return true;
         }

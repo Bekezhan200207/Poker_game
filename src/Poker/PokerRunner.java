@@ -1,6 +1,7 @@
 package Poker;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PokerRunner {
@@ -31,6 +32,12 @@ public class PokerRunner {
         System.out.println(player1);
         System.out.println(player2);
 
+        player1.setCombination(Combo.getCombo(dealersCards, player1.getDealtCards()));
+        player2.setCombination(Combo.getCombo(dealersCards, player2.getDealtCards()));
+
     }
 
 }
+
+//Integer val1 = pl1_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
+//Integer val2 = pl2_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();

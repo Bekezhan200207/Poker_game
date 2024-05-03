@@ -8,12 +8,21 @@ public class Player {
     public List<Card> dealtCards = new ArrayList<>();
 
     public String name;
+    public Combos combination;
 
     public Player(String name) {
         this.name = name;
     }
 
-    public List getDealtCards() {
+    public Combos getCombination() {
+        return combination;
+    }
+
+    public void setCombination(Combos combination) {
+        this.combination = combination;
+    }
+
+    public List<Card> getDealtCards() {
         return dealtCards;
     }
 
@@ -21,7 +30,7 @@ public class Player {
         return name;
     }
 
-    public void setDealtCards(List dealtCards) {
+    public void setDealtCards(List<Card> dealtCards) {
         this.dealtCards = dealtCards;
     }
 
