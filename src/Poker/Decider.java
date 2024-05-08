@@ -14,10 +14,13 @@ public class Decider {
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
+        Boolean present = false;
         for (Card card : allCards) {
             pair.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = pair.values().stream().filter(x -> x == 2).count();
+
+
         if(counter == 1){
             return true;
         }
