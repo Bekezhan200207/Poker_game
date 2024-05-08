@@ -10,7 +10,6 @@ public class Decider {
 
 
     public static boolean pair(List<Card> listDealer, List<Card> listplayer){
-        Combos val = null;
         Map<Integer,Integer> pair = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
@@ -18,38 +17,31 @@ public class Decider {
         for (Card card : allCards) {
             pair.merge(card.cardvalue, 1, Integer::sum);
         }
-        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
-        if (first.isPresent()) {
-            Map.Entry<Integer,Integer> entry = first.get();
-            for (Card card : listplayer) {
-                if(card.cardtype.equals(entry.getKey())){
-                    return true;
-                }
-            }
+        long counter = pair.values().stream().filter(x -> x == 2).count();
+        if(counter == 1){
+            return true;
+        }
+        else{
+            return false;
         }
 
 
-        return false;
     }
     public static boolean twoPairs(List<Card> listDealer, List<Card> listplayer){
-        Map<Card, Card> pair1 = null;
-        Map<Card, Card> pair2 = null;
-
-        for (Card card : listplayer) {
-            for (Card card1 : listDealer) {
-                if (card.cardvalue.equals(card1.cardvalue)){
-                    if(pair1 == null) {
-                        pair1.put(card, card1);
-                    }
-                    else{
-                        pair1.put(card, card1);
-                    }
-                    return true;
-                }
-            }
+        Map<Integer,Integer> twoPairs = new HashMap<>();
+        List<Card> allCards = new ArrayList<>();
+        allCards.addAll(listDealer);
+        allCards.addAll(listplayer);
+        for (Card card : allCards) {
+            twoPairs.merge(card.cardvalue, 1, Integer::sum);
         }
-        return false;
-    }
+        long counter = twoPairs.values().stream().filter(x -> x == 2).count();
+        if(counter == 2){
+            return true;
+        }
+        else{
+            return false;
+        }    }
 
     public static boolean threes(List<Card> listDealer, List<Card> listplayer){
         Set<Card> three = new HashSet<>();
@@ -72,7 +64,6 @@ public class Decider {
     }
 
     public static boolean flash(List<Card> listDealer, List<Card> listplayer){
-        Combos val = null;
         List<Card> allCards = new ArrayList<>();
         Map<CardType, Integer> Flashcombo = new HashMap<>();
         allCards.addAll(listDealer);
@@ -80,21 +71,16 @@ public class Decider {
         for (Card allCard : allCards) {
             Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
         }
-        Optional<Map.Entry<CardType, Integer>> any = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 4).findFirst();
-        if (any.isPresent()){
-            Map.Entry<CardType, Integer> entry = any.get();
-            for (Card card : listplayer) {
-                if(card.cardtype.equals(entry.getKey())){
-                    return true;
-
-                }
-            }
+        long counter = Flashcombo.values().stream().filter(x -> x == 5).count();
+        if(counter == 1){
+            return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
     public static boolean street(List<Card> listDealer, List<Card> listplayer){
-        Combos val;
         List<Card> allCards = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();
         allCards.addAll(listDealer);
@@ -103,8 +89,8 @@ public class Decider {
             nums.add(allCard.cardvalue);
         }
         nums.sort(Comparator.naturalOrder());
-        Integer number = nums.get(0);
-        Integer counter = 0;
+        Integer number = nums.getFirst();
+        int counter = 0;
         for (int i = 1; i < 7; i++) {
             if(nums.get(i) == number + 1){
                 number = nums.get(i);
@@ -122,47 +108,33 @@ public class Decider {
                 break;
             }
         }
-        if (counter >= 5 && playercard){
-            return true;
-        }
-
-
-        return false;
+        return counter >= 5 && playercard;
     }
     public static boolean fullHouse(List<Card> listDealer, List<Card> listplayer){
-        Boolean threes = threes(listDealer,listplayer);;
-        Boolean pair = pair(listDealer,listplayer);;
-        if(pair && threes){
-            return true;
-        }
-        return false;
+        Boolean threes = threes(listDealer,listplayer);
+        Boolean pair = pair(listDealer,listplayer);
+        return pair && threes;
     }
     public static boolean quads(List<Card> listDealer, List<Card> listplayer){
-        Map<Integer,Integer> pair = new HashMap<>();
+        Map<Integer,Integer> quads = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
         for (Card card : allCards) {
-            pair.merge(card.cardvalue, 1, Integer::sum);
+            quads.merge(card.cardvalue, 1, Integer::sum);
         }
-        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 4).findFirst();
-        if (first.isPresent()) {
-            Map.Entry<Integer,Integer> entry = first.get();
-            for (Card card : listplayer) {
-                if(card.cardtype.equals(entry.getKey())){
-                    return true;
-                }
-            }
+        long counter = quads.values().stream().filter(x -> x == 4).count();
+        if(counter == 1){
+            return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
     public static boolean streetFLash(List<Card> listDealer, List<Card> listplayer){
-        Boolean Flash = flash(listDealer,listplayer);;
-        Boolean Street = street(listDealer,listplayer);;
-        if(Flash && Street){
-            return true;
-        }
-        return false;
+        Boolean Flash = flash(listDealer,listplayer);
+        Boolean Street = street(listDealer,listplayer);
+        return Flash && Street;
     }
 }

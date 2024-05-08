@@ -35,9 +35,29 @@ public class PokerRunner {
         player1.setCombination(Combo.getCombo(dealersCards, player1.getDealtCards()));
         player2.setCombination(Combo.getCombo(dealersCards, player2.getDealtCards()));
 
+        if(player2.getCombination().ordinal() < player1.getCombination().ordinal()){
+            System.out.println("Winner is " + player2.getName() + " with " + player2.getCombination() + " combination");
+        } else if (player1.getCombination().ordinal() < player2.getCombination().ordinal()) {
+            System.out.println("Winner is " + player1.getName() + " with " + player1.getCombination() + " combination");
+        }else{
+            Integer val1 = player1.dealtCards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
+            Integer val2 = player2.dealtCards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
+            if(val1 < val2){
+                System.out.println("Winner is " + player2.getName() + " with " + player2.getCombination() + " combination");
+            } else if (val1 > val2) {
+                System.out.println("Winner is " + player1.getName() + " with " + player1.getCombination() + " combination");
+            }
+            else{
+                    System.out.println("Draw. No one wins nor loses.");
+            }
+
+        }
+
+
     }
 
 }
 
 //Integer val1 = pl1_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
 //Integer val2 = pl2_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
+//две пары не реализованы как и старшая карта
