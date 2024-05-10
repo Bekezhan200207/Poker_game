@@ -19,15 +19,17 @@ public class Decider {
             pair.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = pair.values().stream().filter(x -> x == 2).count();
+        boolean active = false;
+        for (Card card : listplayer) {
+            active = pair.entrySet().stream().filter(x -> x.getValue() == 2).anyMatch(x -> x.getKey().equals(card.cardvalue));
+        }
 
-
-        if(counter == 1){
+        if(counter == 1 && active){
             return true;
         }
         else{
             return false;
         }
-
 
     }
     public static boolean twoPairs(List<Card> listDealer, List<Card> listplayer){
@@ -39,7 +41,18 @@ public class Decider {
             twoPairs.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = twoPairs.values().stream().filter(x -> x == 2).count();
-        if(counter == 2){
+        Optional<Map.Entry<Integer, Integer>> first = twoPairs.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        boolean active = false;
+        if(first.isPresent()) {
+            Map.Entry<Integer, Integer> second = first.get();
+            for (Card card : listplayer) {
+                if (second.getKey() == card.cardvalue) {
+                    active = true;
+                }
+            }
+        }
+
+        if(counter == 2 && active){
             return true;
         }
         else{
@@ -75,6 +88,16 @@ public class Decider {
             Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
         }
         long counter = Flashcombo.values().stream().filter(x -> x == 5).count();
+        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        boolean active = false;
+        if(first.isPresent()) {
+            Map.Entry<Integer, Integer> second = first.get();
+            for (Card card : listplayer) {
+                if (second.getKey() == card.cardvalue) {
+                    active = true;
+                }
+            }
+        }
         if(counter == 1){
             return true;
         }
