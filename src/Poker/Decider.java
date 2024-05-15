@@ -22,6 +22,7 @@ public class Decider {
         boolean active = false;
         for (Card card : listplayer) {
             active = pair.entrySet().stream().filter(x -> x.getValue() == 2).anyMatch(x -> x.getKey().equals(card.cardvalue));
+            if (active) break;
         }
 
         return counter == 1 && active;
@@ -54,6 +55,9 @@ public class Decider {
                     active = true;
                     break;
                 }
+                else{
+                    active = false;
+                }
             }
         }
         return counter == 2 && active;
@@ -61,21 +65,32 @@ public class Decider {
 
     public static boolean threes(List<Card> listDealer, List<Card> listplayer){
         Set<Card> three = new HashSet<>();
-
-        for (Card card : listplayer) {
-            three.add(card);
+        if (listplayer.get(0).cardvalue == listplayer.get(1).cardvalue){
+            three.add(listplayer.get(0));
+            three.add(listplayer.get(1));
             for (Card card1 : listDealer) {
-                if(card.cardvalue.equals(card1.cardvalue)){
+                if(listplayer.get(0).cardvalue.equals(card1.cardvalue)){
                     three.add(card1);
                 }
             }
-            if(three.size() != 3){
-                three.clear();
-            }
-            else{
-                return true;
+        }
+        else {
+            for (Card card : listplayer) {
+                three.add(card);
+                for (Card card1 : listDealer) {
+                    if (card.cardvalue.equals(card1.cardvalue)) {
+                        three.add(card1);
+                    }
+                }
             }
         }
+        if(three.size() != 3){
+            three.clear();
+        }
+        else{
+            return true;
+        }
+
         return false;
     }
 

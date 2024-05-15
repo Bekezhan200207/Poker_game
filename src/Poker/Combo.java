@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Combo {
     public static Combos getCombo(List<Card> listDealer, List<Card> listplayer){
-        Decider.pair(listDealer, listplayer);
         if (Decider.streetFLash(listDealer, listplayer)){
             return Combos.StreetFlash;
         }

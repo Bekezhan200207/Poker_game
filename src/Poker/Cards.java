@@ -12,11 +12,10 @@ public class Cards {
         String[] cardsVal = {"2", "3", "4", "5", "6", "7", "8" ,"9", "10", "Jack", "Queen", "King","Ace"};
         Integer[] intValue = {2,3,4,5,6,7,8,9,10,11,12,13,14};
         CardType[] values = CardType.values();
-        for (String s : cardsVal) {
-            for (CardType value : values) {
-                for (Integer i : intValue) {
-                    cardStack.push(new Card(s, value, i));
-                }
+        for (CardType value : values) {
+            for (int i = 0; i < cardsVal.length; i++) {
+                Integer num = intValue[i];
+                cardStack.push(new Card(cardsVal[i],value,num));
             }
         }
     }
