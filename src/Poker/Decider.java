@@ -24,40 +24,40 @@ public class Decider {
             active = pair.entrySet().stream().filter(x -> x.getValue() == 2).anyMatch(x -> x.getKey().equals(card.cardvalue));
         }
 
-        if(counter == 1 && active){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return counter == 1 && active;
 
     }
     public static boolean twoPairs(List<Card> listDealer, List<Card> listplayer){
         Map<Integer,Integer> twoPairs = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
+        List<Integer> keyList = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
         for (Card card : allCards) {
             twoPairs.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = twoPairs.values().stream().filter(x -> x == 2).count();
-        Optional<Map.Entry<Integer, Integer>> first = twoPairs.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        for (Map.Entry<Integer, Integer> e : twoPairs.entrySet()) {
+            Integer key = e.getKey();
+            Integer value = e.getValue();
+            if(value == 1){
+                keyList.add(key);
+            }
+        }
         boolean active = false;
-        if(first.isPresent()) {
-            Map.Entry<Integer, Integer> second = first.get();
+        for (Integer i : keyList) {
+            twoPairs.remove(i);
+        }
+        for (Integer i : twoPairs.keySet()) {
             for (Card card : listplayer) {
-                if (second.getKey() == card.cardvalue) {
+                if(card.cardvalue.equals(i)) {
                     active = true;
+                    break;
                 }
             }
         }
-
-        if(counter == 2 && active){
-            return true;
-        }
-        else{
-            return false;
-        }    }
+        return counter == 2 && active;
+    }
 
     public static boolean threes(List<Card> listDealer, List<Card> listplayer){
         Set<Card> three = new HashSet<>();
@@ -88,17 +88,17 @@ public class Decider {
             Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
         }
         long counter = Flashcombo.values().stream().filter(x -> x == 5).count();
-        Optional<Map.Entry<Integer, Integer>> first = pair.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        Optional<Map.Entry<CardType, Integer>> first = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
         boolean active = false;
         if(first.isPresent()) {
-            Map.Entry<Integer, Integer> second = first.get();
+            Map.Entry<CardType, Integer> second = first.get();
             for (Card card : listplayer) {
-                if (second.getKey() == card.cardvalue) {
+                if (second.getKey() == card.cardtype) {
                     active = true;
                 }
             }
         }
-        if(counter == 1){
+        if(counter == 1 && active){
             return true;
         }
         else{
@@ -144,18 +144,33 @@ public class Decider {
     public static boolean quads(List<Card> listDealer, List<Card> listplayer){
         Map<Integer,Integer> quads = new HashMap<>();
         List<Card> allCards = new ArrayList<>();
+        List<Integer> keyList = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
         for (Card card : allCards) {
             quads.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = quads.values().stream().filter(x -> x == 4).count();
-        if(counter == 1){
-            return true;
+        for (Map.Entry<Integer, Integer> e : quads.entrySet()) {
+            Integer key = e.getKey();
+            Integer value = e.getValue();
+            if(value == 1){
+                keyList.add(key);
+            }
         }
-        else{
-            return false;
+        boolean active = false;
+        for (Integer i : keyList) {
+            quads.remove(i);
         }
+        for (Integer i : quads.keySet()) {
+            for (Card card : listplayer) {
+                if(card.cardvalue.equals(i)) {
+                    active = true;
+                    break;
+                }
+            }
+        }
+        return counter == 1 && active;
     }
 
     public static boolean streetFLash(List<Card> listDealer, List<Card> listplayer){
