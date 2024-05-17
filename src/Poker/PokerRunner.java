@@ -16,8 +16,8 @@ public class PokerRunner {
 //        Card card4 = deck.takeCard();
 //        Card card5 = deck.takeCard();
         Card card1 = new Card("2", CardType.Clubs, 2);
-        Card card2 = new Card("3", CardType.Diamonds, 3);
-        Card card3 = new Card("4", CardType.Hearts, 4);
+        Card card2 = new Card("3", CardType.Spades, 3);
+        Card card3 = new Card("4", CardType.Spades, 4);
         Card card4 = new Card("5", CardType.Clubs, 5);
         Card card5 = new Card("6", CardType.Spades, 6);
         List<Card> dealersCards = List.of(card1, card2, card3, card4, card5);
@@ -28,9 +28,9 @@ public class PokerRunner {
 //            player1.takeCard(deck.takeCard());
 //            player2.takeCard(deck.takeCard());
 //        }
-        player1.takeCard(new Card("2", CardType.Hearts, 2));
+        player1.takeCard(new Card("6", CardType.Hearts, 6));
         player1.takeCard(new Card("2", CardType.Spades, 2));
-        player2.takeCard(new Card("7", CardType.Spades, 7));
+        player2.takeCard(new Card("7", CardType.Clubs, 7));
         player2.takeCard(new Card("Ace", CardType.Spades, 14));
         System.out.println("Dealers` cards are: ");
         for (Card dealersCard : dealersCards) {
@@ -67,6 +67,3 @@ public class PokerRunner {
 
 }
 
-//Integer val1 = pl1_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
-//Integer val2 = pl2_cards.stream().map(x -> x.cardvalue).max(Comparator.comparing(i -> i)).orElseThrow();
-//две пары не реализованы как и старшая карта

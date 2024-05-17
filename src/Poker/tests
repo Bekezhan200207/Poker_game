@@ -1,0 +1,60 @@
+pair
+        Card card1 = new Card("2", CardType.Clubs, 2);
+        Card card2 = new Card("3", CardType.Diamonds, 3);
+        Card card3 = new Card("4", CardType.Hearts, 4);
+        Card card4 = new Card("5", CardType.Clubs, 5);
+        Card card5 = new Card("6", CardType.Spades, 6);
+
+        player1.takeCard(new Card("2", CardType.Hearts, 2));
+        player1.takeCard(new Card("King", CardType.Spades, 13));
+        player2.takeCard(new Card("7", CardType.Spades, 7));
+        player2.takeCard(new Card("Ace", CardType.Spades, 14));
+
+Twopairs
+        Card card1 = new Card("2", CardType.Clubs, 2);
+        Card card2 = new Card("3", CardType.Diamonds, 3);
+        Card card3 = new Card("4", CardType.Hearts, 4);
+        Card card4 = new Card("5", CardType.Clubs, 5);
+        Card card5 = new Card("6", CardType.Spades, 6);
+
+        player1.takeCard(new Card("2", CardType.Hearts, 2));
+        player1.takeCard(new Card("3", CardType.Clubs, 3));
+        player2.takeCard(new Card("7", CardType.Spades, 7));
+        player2.takeCard(new Card("Ace", CardType.Spades, 14));
+
+threes
+
+         Card card1 = new Card("2", CardType.Clubs, 2);
+         Card card2 = new Card("3", CardType.Diamonds, 3);
+         Card card3 = new Card("4", CardType.Hearts, 4);
+         Card card4 = new Card("5", CardType.Clubs, 5);
+         Card card5 = new Card("6", CardType.Spades, 6);
+
+         player1.takeCard(new Card("2", CardType.Hearts, 2));
+         player1.takeCard(new Card("2", CardType.Spades, 2));
+         player2.takeCard(new Card("7", CardType.Spades, 7));
+         player2.takeCard(new Card("Ace", CardType.Spades, 14));
+
+Flash
+        Card card1 = new Card("2", CardType.Clubs, 2);
+        Card card2 = new Card("3", CardType.Spades, 3);
+        Card card3 = new Card("4", CardType.Spades, 4);
+        Card card4 = new Card("5", CardType.Clubs, 5);
+        Card card5 = new Card("6", CardType.Spades, 6);
+
+        player1.takeCard(new Card("5", CardType.Hearts, 5));
+        player1.takeCard(new Card("2", CardType.Spades, 2));
+        player2.takeCard(new Card("7", CardType.Spades, 7));
+        player2.takeCard(new Card("Ace", CardType.Spades, 14));
+
+Street
+        Card card1 = new Card("2", CardType.Clubs, 2);
+        Card card2 = new Card("3", CardType.Spades, 3);
+        Card card3 = new Card("4", CardType.Spades, 4);
+        Card card4 = new Card("5", CardType.Clubs, 5);
+        Card card5 = new Card("6", CardType.Spades, 6);
+
+        player1.takeCard(new Card("6", CardType.Hearts, 6));
+        player1.takeCard(new Card("2", CardType.Spades, 2));
+        player2.takeCard(new Card("7", CardType.Clubs, 7));
+        player2.takeCard(new Card("Ace", CardType.Spades, 14));

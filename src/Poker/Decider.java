@@ -103,7 +103,7 @@ public class Decider {
             Flashcombo.merge(allCard.cardtype, 1, Integer::sum);
         }
         long counter = Flashcombo.values().stream().filter(x -> x == 5).count();
-        Optional<Map.Entry<CardType, Integer>> first = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 2).findFirst();
+        Optional<Map.Entry<CardType, Integer>> first = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 5).findFirst();
         boolean active = false;
         if(first.isPresent()) {
             Map.Entry<CardType, Integer> second = first.get();
@@ -123,28 +123,35 @@ public class Decider {
 
     public static boolean street(List<Card> listDealer, List<Card> listplayer){
         List<Card> allCards = new ArrayList<>();
-        List<Integer> nums = new ArrayList<>();
+        List<Integer> street = new ArrayList<>();
+        List<Integer> exsess = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
         for (Card allCard : allCards) {
-            nums.add(allCard.cardvalue);
+            street.add(allCard.cardvalue);
         }
-        nums.sort(Comparator.naturalOrder());
-        Integer number = nums.getFirst();
-        int counter = 0;
-        for (int i = 1; i < 7; i++) {
-            if(nums.get(i) == number + 1){
-                number = nums.get(i);
+        street.sort(Comparator.naturalOrder());
+        int counter = 2;
+        for (int i = 0; i < street.size() - 1; i++) {
+           if(street.get(i) == street.get(i + 1)){
+               exsess.add(street.get(i));
+           }
+        }
+        for (int i = exsess.size() - 1; i >= 0; i--) {
+            street.remove(exsess.get(i));
+        }
+        for (int i = 0; i < street.size() - 1; i++) {
+            if(street.get(i) == street.get(i + 1) - 1){
+
                 counter++;
             }
             else{
-                counter = 0;
-                number = nums.get(i);
+                counter = 2;
             }
         }
         boolean playercard = false;
         for (Card card : listplayer) {
-            if(nums.contains(card.cardvalue)){
+            if(street.contains(card.cardvalue)){
                 playercard = true;
                 break;
             }
