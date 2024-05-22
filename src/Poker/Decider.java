@@ -82,16 +82,18 @@ public class Decider {
                         three.add(card1);
                     }
                 }
+                if(three.size() != 3){
+                    three.clear();
+                }
             }
+
         }
-        if(three.size() != 3){
-            three.clear();
-        }
-        else{
+        if (three.size() == 3){
             return true;
         }
-
-        return false;
+        else{
+            return false;
+        }
     }
 
     public static boolean flash(List<Card> listDealer, List<Card> listplayer){
@@ -144,6 +146,8 @@ public class Decider {
             if(street.get(i) == street.get(i + 1) - 1){
 
                 counter++;
+            } else if (counter >= 5) {
+                break;
             }
             else{
                 counter = 2;

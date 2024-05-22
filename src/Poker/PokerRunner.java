@@ -15,11 +15,11 @@ public class PokerRunner {
 //        Card card3 = deck.takeCard();
 //        Card card4 = deck.takeCard();
 //        Card card5 = deck.takeCard();
-        Card card1 = new Card("2", CardType.Clubs, 2);
-        Card card2 = new Card("3", CardType.Spades, 3);
-        Card card3 = new Card("4", CardType.Spades, 4);
-        Card card4 = new Card("5", CardType.Clubs, 5);
-        Card card5 = new Card("6", CardType.Spades, 6);
+        Card card1 = new Card("3", CardType.Clubs, 3);
+        Card card2 = new Card("2", CardType.Diamonds, 2);
+        Card card3 = new Card("4", CardType.Diamonds, 4);
+        Card card4 = new Card("6", CardType.Clubs, 6);
+        Card card5 = new Card("7", CardType.Diamonds, 7);
         List<Card> dealersCards = List.of(card1, card2, card3, card4, card5);
 
         Player player1 = new Player("Alex");
@@ -28,8 +28,8 @@ public class PokerRunner {
 //            player1.takeCard(deck.takeCard());
 //            player2.takeCard(deck.takeCard());
 //        }
-        player1.takeCard(new Card("6", CardType.Hearts, 6));
-        player1.takeCard(new Card("2", CardType.Spades, 2));
+        player1.takeCard(new Card("6", CardType.Diamonds, 6));
+        player1.takeCard(new Card("5", CardType.Diamonds, 5));
         player2.takeCard(new Card("7", CardType.Clubs, 7));
         player2.takeCard(new Card("Ace", CardType.Spades, 14));
         System.out.println("Dealers` cards are: ");
@@ -43,6 +43,9 @@ public class PokerRunner {
 
         player1.setCombination(Combo.getCombo(dealersCards, player1.getDealtCards()));
         player2.setCombination(Combo.getCombo(dealersCards, player2.getDealtCards()));
+
+        Combos player1Combination = player1.getCombination();
+        Combos player2Combination = player2.getCombination();
 
         if(player2.getCombination().ordinal() < player1.getCombination().ordinal()){
             System.out.println("Winner is " + player2.getName() + " with " + player2.getCombination() + " combination");
