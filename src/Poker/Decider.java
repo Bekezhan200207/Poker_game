@@ -14,7 +14,6 @@ public class Decider {
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(listDealer);
         allCards.addAll(listplayer);
-        Boolean present = false;
         for (Card card : allCards) {
             pair.merge(card.cardvalue, 1, Integer::sum);
         }
@@ -53,10 +52,10 @@ public class Decider {
             for (Card card : listplayer) {
                 if(card.cardvalue.equals(i)) {
                     active = true;
-                    break;
                 }
                 else{
                     active = false;
+                    break;
                 }
             }
         }
@@ -146,7 +145,7 @@ public class Decider {
             if(street.get(i) == street.get(i + 1) - 1){
 
                 counter++;
-            } else if (counter >= 5) {
+            } else if (counter == 6) {
                 break;
             }
             else{

@@ -14,28 +14,12 @@ public class Player {
         this.name = name;
     }
 
-    public Combos getCombination() {
-        return combination;
-    }
-
     public void setCombination(Combos combination) {
         this.combination = combination;
     }
 
     public List<Card> getDealtCards() {
         return dealtCards;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setDealtCards(List<Card> dealtCards) {
-        this.dealtCards = dealtCards;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void takeCard(Card card){
