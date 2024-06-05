@@ -18,13 +18,7 @@ public class Decider {
             pair.merge(card.cardvalue, 1, Integer::sum);
         }
         long counter = pair.values().stream().filter(x -> x == 2).count();
-        boolean active = false;
-        for (Card card : listplayer) {
-            active = pair.entrySet().stream().filter(x -> x.getValue() == 2).anyMatch(x -> x.getKey().equals(card.cardvalue));
-            if (active) break;
-        }
-
-        return counter == 1 && active;
+        return counter == 1;
 
     }
     public static boolean twoPairs(List<Card> listDealer, List<Card> listplayer){
@@ -44,22 +38,8 @@ public class Decider {
                 keyList.add(key);
             }
         }
-        boolean active = false;
-        for (Integer i : keyList) {
-            twoPairs.remove(i);
-        }
-        for (Integer i : twoPairs.keySet()) {
-            for (Card card : listplayer) {
-                if(card.cardvalue.equals(i)) {
-                    active = true;
-                }
-                else{
-                    active = false;
-                    break;
-                }
-            }
-        }
-        return counter == 2 && active;
+
+        return counter == 2 ;
     }
 
     public static boolean threes(List<Card> listDealer, List<Card> listplayer){
@@ -105,16 +85,7 @@ public class Decider {
         }
         long counter = Flashcombo.values().stream().filter(x -> x == 5).count();
         Optional<Map.Entry<CardType, Integer>> first = Flashcombo.entrySet().stream().filter(x -> x.getValue() == 5).findFirst();
-        boolean active = false;
-        if(first.isPresent()) {
-            Map.Entry<CardType, Integer> second = first.get();
-            for (Card card : listplayer) {
-                if (second.getKey() == card.cardtype) {
-                    active = true;
-                }
-            }
-        }
-        if(counter == 1 && active){
+        if(counter == 1){
             return true;
         }
         else{
@@ -152,14 +123,7 @@ public class Decider {
                 counter = 2;
             }
         }
-        boolean playercard = false;
-        for (Card card : listplayer) {
-            if(street.contains(card.cardvalue)){
-                playercard = true;
-                break;
-            }
-        }
-        return counter >= 5 && playercard;
+        return counter >= 5;
     }
     public static boolean fullHouse(List<Card> listDealer, List<Card> listplayer){
         Boolean threes = threes(listDealer,listplayer);
@@ -183,19 +147,8 @@ public class Decider {
                 keyList.add(key);
             }
         }
-        boolean active = false;
-        for (Integer i : keyList) {
-            quads.remove(i);
-        }
-        for (Integer i : quads.keySet()) {
-            for (Card card : listplayer) {
-                if(card.cardvalue.equals(i)) {
-                    active = true;
-                    break;
-                }
-            }
-        }
-        return counter == 1 && active;
+
+        return counter == 1;
     }
 
     public static boolean streetFLash(List<Card> listDealer, List<Card> listplayer){

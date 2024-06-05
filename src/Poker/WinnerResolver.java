@@ -26,12 +26,17 @@ public class WinnerResolver {
         List<Combos> list1 = map.keySet().stream().sorted().toList();
         Combos combos = list1.get(0);
         List<Player> players = map.get(combos);
-        System.out.print("Winners are - ");
-        System.out.println(players.stream().map(x -> x.name).collect(Collectors.joining(", ")));
-        for (Player player : players) {
-            System.out.println(player + " with " + player.combination + " combination");
+        if(players.size() == list.size()){
+            System.out.println("Draw. No one wins nor loses.");
+            System.out.println("everyone had " + combos + " combination");
         }
-
+        else {
+            System.out.print("Winners are - ");
+            System.out.println(players.stream().map(x -> x.name).collect(Collectors.joining(", ")));
+            for (Player player : players) {
+                System.out.println(player + " with " + player.combination + " combination");
+            }
+        }
 
 
     }
